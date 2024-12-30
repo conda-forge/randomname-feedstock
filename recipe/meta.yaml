@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/randomname-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/randomname-{{ version }}.tar.gz
   sha256: b79b98302ba4479164b0a4f87995b7bebbd1d91012aeda483341e3e58ace520e
 
 build:
@@ -14,14 +14,15 @@ build:
     - randomname=randomname:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.7
+    - python {{ python_min }}
     - pip
+    - setuptools
   run:
-    - python >=3.7
+    - python >={{ python_min }}
     - fire
 
 test:
@@ -32,6 +33,7 @@ test:
     - randomname --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/beasteers/randomname
